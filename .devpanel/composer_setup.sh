@@ -249,7 +249,6 @@ composer config repositories.codemirror '{
 composer require -n --no-update \
     codemirror/codemirror \
     cweagans/composer-patches \
-    drupal/ai_provider_litellm \
     drupal/pulse \
     jquery/image-picker \
     jquery/inputmask \
