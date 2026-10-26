@@ -1,0 +1,35 @@
+diff --git a/src/Config/Schema/ComponentInputsMapping.php b/src/Config/Schema/ComponentInputsMapping.php
+--- a/src/Config/Schema/ComponentInputsMapping.php
++++ b/src/Config/Schema/ComponentInputsMapping.php
+@@ -6,5 +6,6 @@ namespace Drupal\canvas\Config\Schema;
+ 
+ use Drupal\canvas\Plugin\DataType\ComponentInputs;
++use Drupal\Component\Serialization\Json;
+ use Drupal\Core\Config\Schema\Mapping;
+ use Drupal\Core\TypedData\DataDefinitionInterface;
+ use Drupal\Core\TypedData\MapDataDefinition;
+@@ -48,6 +49,9 @@ final class ComponentInputsMapping extends Mapping {
+     $component_id = $component_instance['component_id'];
+     $component_version = $component_instance['component_version'];
+     $actual_inputs = $component_instance['inputs'];
++    if (\is_string($actual_inputs)) {
++      $actual_inputs = Json::decode($actual_inputs);
++    }
+ 
+     // Delegate to ComponentInputs for the actual resolution logic.
+     // @see \Drupal\canvas\Plugin\DataType\ComponentInputs::resolveConfigSchemaMapping()
+@@ -56,4 +60,14 @@ final class ComponentInputsMapping extends Mapping {
+     parent::__construct($definition, $name, $parent);
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public function setValue($value, $notify = TRUE) {
++    if (\is_string($value)) {
++      $value = Json::decode($value);
++    }
++    parent::setValue($value, $notify);
++  }
++
+ }

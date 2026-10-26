@@ -23,6 +23,13 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
   the Drupal Automatic Updates web UI.
 
+## Composer patches
+
+The root `patches.json` includes `patches/canvas-json-inputs.patch` to support
+Pulse's legacy JSON-encoded component inputs when Recipe Locale reads the shipped
+recipe configuration. Canvas must decode these inputs both when resolving the
+schema and when assigning its value, so translation extraction can read them.
+
 
 ## Git integration
 
